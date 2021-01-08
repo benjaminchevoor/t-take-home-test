@@ -1,0 +1,179 @@
+---
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://somedomain.com
+    description: Generated server url
+paths:
+  "/v1/current":
+    get:
+      tags:
+        - rest-api
+      summary: Returns the current value for the user. This is an authenticated endpoint.
+      operationId: getCurrentInteger
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/IntegerBody"
+        '400':
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponseBody"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    put:
+      tags:
+        - rest-api
+      summary: Stores the provided integer in the service. The integer MUST be non-negative.
+        This is an authenticated endpoint.
+      operationId: putCurrentInteger
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/IntegerBody"
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponseBody"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  "/v1/register":
+    post:
+      tags:
+        - rest-api
+      summary: Creates a new user.
+      operationId: createNewUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/CreateNewUserRequestBody"
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/CreateNewUserResponseBody"
+        '400':
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponseBody"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - rest-api
+      summary: Deletes a user. This is an authenticated endpoint
+      operationId: deleteUser
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponseBody"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  "/v1/next":
+    get:
+      tags:
+        - rest-api
+      summary: Increments the user stored value and returns that value. This is an
+        authenticated endpoint.
+      operationId: getNextInteger
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/IntegerBody"
+        '400':
+          description: Bad Request
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/ErrorResponseBody"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    ErrorResponseBody:
+      type: object
+      properties:
+        reason:
+          type: string
+    IntegerBody:
+      type: object
+      properties:
+        integer:
+          type: integer
+          format: int32
+    CreateNewUserRequestBody:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+    CreateNewUserResponseBody:
+      type: object
+      properties:
+        email:
+          type: string
+        apiKey:
+          type: string

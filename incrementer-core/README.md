@@ -16,7 +16,31 @@ I have stubbed out a class for persisting the data. They are:
 ```
 KeyCloakUserManagementService.java
 RedisIncrementingData.java
-``` 
+```
+
+# The REST API
+A full OpenAPI v3 formated definition of the API can be found in the local file `openApiSpec.yaml`. 
+
+A small preview of the API is:
+
+### 
+```
+  "/v1/register":
+    post:
+      summary: Creates a new user.
+    delete:
+      summary: Deletes a user. This is an authenticated endpoint.
+  "/v1/current":
+    get:
+      summary: Returns the current value for the user. This is an authenticated endpoint.
+    put:
+      summary: Stores the provided integer in the service. The integer MUST be non-negative.
+        This is an authenticated endpoint.
+  "/v1/next":
+    get:
+      summary: Increments the user stored value and returns that value. This is an
+        authenticated endpoint.
+```
 
 # How to run the service
 The easiest way to run is to use the `spring-boot` maven goal.

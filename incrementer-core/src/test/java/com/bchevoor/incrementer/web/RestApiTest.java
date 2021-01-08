@@ -26,6 +26,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestExecutionListeners(MockitoTestExecutionListener.class)
 public class RestApiTest extends AbstractTestNGSpringContextTests {
 
+    /**
+     * Helps run our test cases
+     */
     private static class TestScenario {
 
         private static void assertIntegerResponse(int expectedValue, ResultActions resultActions) throws Exception {
@@ -58,6 +61,9 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
             }
         }
 
+        /**
+         * Deletes the registered user.
+         */
         public void deleteRegisteredUser() throws Exception {
             checkApiKey();
 
@@ -66,6 +72,11 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
                    .andExpect(status().isOk());
         }
 
+        /**
+         * Retrieves the CURRENT value from the service and asserts that the value matches the provided int.
+         *
+         * @param expectedValue the value expected to be returned by the service.
+         */
         public void getCurrentAndAssertValue(int expectedValue) throws Exception {
             checkApiKey();
 
@@ -77,6 +88,11 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
             assertIntegerResponse(expectedValue, resultActions);
         }
 
+        /**
+         * Retrieves the NEXT value from the service and asserts that the value matches the provided int.
+         *
+         * @param expectedValue the value expected to be returned by the service.
+         */
         public void getNextAndAssertValue(int expectedValue) throws Exception {
             checkApiKey();
 
@@ -88,6 +104,11 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
             assertIntegerResponse(expectedValue, resultActions);
         }
 
+        /**
+         * Updates the current value stored by the service.
+         *
+         * @param value the value to store in the service
+         */
         public void putCurrentValue(int value) throws Exception {
             checkApiKey();
 
@@ -101,6 +122,12 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
                    .andExpect(status().isOk());
         }
 
+        /**
+         * Registers a new user to the service with the provided email and password.
+         *
+         * @param email the new user's email
+         * @param password the new user's password
+         */
         public void registerUser(String email, String password) throws Exception {
             JSONObject requestBody = new JSONObject();
             requestBody.put("email", email);
@@ -139,6 +166,7 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
          5) Set the value for the user to 1000
          7) Get the current value for the user, assert it is 1000
          8) Increment the value for the user, assert it is 1001
+         9) Test deleting the user
          */
 
         TestScenario ts = createTestScenario();
