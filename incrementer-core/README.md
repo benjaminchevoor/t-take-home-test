@@ -14,9 +14,37 @@ InMemoryIncrementingData.java
 
 I have stubbed out a class for persisting the data. They are:
 ```
-RedisIncrementingData.java
 KeyCloakUserManagementService.java
+RedisIncrementingData.java
 ``` 
 
-# How to run
-TODO
+# How to run the service
+The easiest way to run is to use the `spring-boot` maven goal.
+```
+./mvnw spring-boot:run
+```
+
+
+# How to build using Maven
+This project uses maven so you can run your typical maven command to compile and install this project into your local maven repository. This project, like most pre-canned Spring projects, come with a maven executable in the project sources. You can run the command with the `mvnw` file.
+
+Eg:
+```
+./mvnw clean install
+```
+
+
+# How to build a Docker image of the service
+Run the following command in the root directory of this project:
+```
+./mvnw spring-boot:build-image
+```
+This uses Spring's built in `buildpack`, which handles all of the docker-ifcation of the project for us. Normally a `Dockerfile` is needed to define a) the parent image, b) what ports to expose c) etc. but with this handy tool we do not need to do any of that.
+
+After this command is run, you will be able to find the image in your local Docker image repository.
+
+Eg:
+```
+$ docker image ls -a
+incrementer-core             0.0.1-SNAPSHOT      3ea5c51a0fc2        41 seconds ago        254MB
+``` 
