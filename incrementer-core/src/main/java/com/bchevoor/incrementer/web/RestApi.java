@@ -9,6 +9,7 @@ import com.bchevoor.incrementer.model.IncrementingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,7 +41,8 @@ public class RestApi {
 
     @PostMapping("register")
     @Operation(summary = "Creates a new user.")
-    public @ResponseBody CreateNewUserResponseBody createNewUser(
+    public @ResponseBody
+    CreateNewUserResponseBody createNewUser(
             @RequestBody CreateNewUserRequestBody body) throws UserAlreadyExistsException {
 
         if (body == null) {
@@ -65,7 +67,8 @@ public class RestApi {
 
     @GetMapping("current")
     @Operation(summary = "Returns the current value for the user. This is an authenticated endpoint.")
-    public @ResponseBody IntegerBody getCurrentInteger(
+    public @ResponseBody
+    IntegerBody getCurrentInteger(
             @RequestHeader(value = AUTHORIZATION_HEADER) String authorizationValue)
             throws AuthenticationFailureException {
 
@@ -79,7 +82,8 @@ public class RestApi {
 
     @GetMapping("next")
     @Operation(summary = "Increments the user stored value and returns that value. This is an authenticated endpoint.")
-    public @ResponseBody IntegerBody getNextInteger(
+    public @ResponseBody
+    IntegerBody getNextInteger(
             @RequestHeader(value = AUTHORIZATION_HEADER) String authorizationValue)
             throws AuthenticationFailureException {
 
@@ -115,6 +119,13 @@ public class RestApi {
     @ResponseBody
     public ErrorResponseBody handleIllegalArgException(UserAlreadyExistsException e) {
         return new ErrorResponseBody().setReason("User already exists");
+    }
+
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorResponseBody handleMissingArgHeader(MissingRequestHeaderException e) {
+        return new ErrorResponseBody().setReason(e.getMessage());
     }
 
     @PutMapping(value = "current", consumes = MediaType.APPLICATION_JSON_VALUE)
