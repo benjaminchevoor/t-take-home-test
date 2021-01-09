@@ -101,7 +101,13 @@ public class RestApi {
         String apiKey = authorizationValue.substring(BEARER_PREFIX.length());
 
         //retrieve the user and their next incremented integer value
-        return userManagementService.authenticate(apiKey);
+        User user = userManagementService.authenticate(apiKey);
+        if (user == null) {
+            //if the user is null, then we should not allow them to use our service
+            throw new AuthenticationFailureException();
+        }
+
+        return user;
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)

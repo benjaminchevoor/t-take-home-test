@@ -47,6 +47,12 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
                 throw new AssertionError(String.format("Expected %s by found %s", expectedJson, contentAsString), err);
             }
         }
+
+        private static void assertReasonResponse(String expectedValue, ResultActions resultActions) throws Exception {
+            JSONObject expectedJson = new JSONObject();
+            expectedJson.put("reason", expectedValue);
+            assertJson(expectedJson.toString(), resultActions);
+        }
         public static final String AUTHORIZATION_HEADER = "Authorization";
         private final MockMvc mockMvc;
         private String apiKey;
@@ -70,6 +76,17 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
             mockMvc.perform(delete(RestApi.FULL_ENDPOINT_PATH + "/register")
                     .header(AUTHORIZATION_HEADER, "Bearer " + apiKey))
                    .andExpect(status().isOk());
+        }
+
+        /**
+         * Retrieves the CURRENT value from the service and asserts that the value matches the provided int.
+         */
+        public void getCurrentAndAssertUnauthorized() throws Exception {
+            checkApiKey();
+
+            mockMvc.perform(get(RestApi.FULL_ENDPOINT_PATH + "/current")
+                    .header(AUTHORIZATION_HEADER, "Bearer " + apiKey))
+                   .andExpect(status().isUnauthorized());
         }
 
         /**
@@ -125,7 +142,7 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
         /**
          * Registers a new user to the service with the provided email and password.
          *
-         * @param email the new user's email
+         * @param email    the new user's email
          * @param password the new user's password
          */
         public void registerUser(String email, String password) throws Exception {
@@ -143,6 +160,10 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
             JSONObject object = new JSONObject(contentAsString);
             this.apiKey = (String) object.get("apiKey");
         }
+
+        public void setApiKey(String apiKey) {
+            this.apiKey = apiKey;
+        }
     }
 
     @Autowired
@@ -153,6 +174,16 @@ public class RestApiTest extends AbstractTestNGSpringContextTests {
                                          .build();
 
         return new TestScenario(mockMvc);
+    }
+
+    /**
+     * Tests that the a fake user cannot access authorized endpoints.
+     */
+    @Test
+    public void testBadUrl() throws Exception {
+        TestScenario ts = createTestScenario();
+        ts.setApiKey("fakeApiKey");
+        ts.getCurrentAndAssertUnauthorized();
     }
 
     @Test
