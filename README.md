@@ -21,8 +21,8 @@ TODO
 
 ### Time spent
 2.5 hours on `incrementer-core`
-1 hour on getting the docker image build and hosted up on my own backend
 2.5 hours on `incrementer-ui`
+1 hour on getting the docker images built, making an AWS API Gateway, and hosted up on my own backend
 
 ### Assumptions made
 Please refer to the README for each project.
