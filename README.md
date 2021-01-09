@@ -16,13 +16,18 @@ This is an the optional front end web app. There is a README in that folder with
 Saturday Jan 9th 2021
 
 ### Location of deployed application
-API root URL: `https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com`
+```
+API root URL: 
+https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com
 
-Example endpoint: `https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com/v1/register`
+Example endpoint
+https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com/v1/register
+
+Swagger API definition: 
+https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/
+```
 
 See `incrementer-core` for more details.
-
-Swagger API definition: `https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/`
 
 
 ### Time spent
