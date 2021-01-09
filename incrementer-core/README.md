@@ -6,7 +6,14 @@ I chose to implement this using Spring Boot and Web since it makes it super easy
 
 This implementation assumed everything can be in-memory and that our deployment is fault-tolerant and will be able to resume from complete data loss :) That is not too useful in a real-world implementation, but for this small exam it seems suitable.
 
-See the following class for the in-memory implementations of this service:
+### Class structure
+
+There is a single class for the model of the service. It is so minimal, it mostly only passes calls to the data-layer.
+```
+IncrementingService.java
+```
+
+The following classes are the in-memory implementations of this service:
 ```
 InMemoryUserManagementService.java
 InMemoryIncrementingData.java
@@ -16,6 +23,11 @@ I have stubbed out a class for persisting the data. They are:
 ```
 KeyCloakUserManagementService.java
 RedisIncrementingData.java
+```
+
+The REST API uses the service model directly and is implemented in:
+```
+RestApi.java
 ```
 
 # The REST API
