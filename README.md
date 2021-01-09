@@ -17,7 +17,9 @@ Saturday Jan 9th 2021
 
 ### Location of deployed application
 API root URL: `https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com`
+
 Example endpoint: `https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com/v1/register`
+
 See `incrementer-core` for more details.
 
 Swagger API definition: `https://ejveoo7w12.execute-api.ca-central-1.amazonaws.com/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/`
@@ -25,7 +27,9 @@ Swagger API definition: `https://ejveoo7w12.execute-api.ca-central-1.amazonaws.c
 
 ### Time spent
 2.5 hours on `incrementer-core`
+
 2.5 hours on `incrementer-ui`
+
 1 hour on getting the docker images built, making an AWS API Gateway, and hosted up on my own backend
 
 ### Assumptions made
@@ -48,4 +52,5 @@ N/A
 
 ### Your feedback on this technical challenge
 👍👍
+
 Good presentation and problem statement. Simple, yet provides the applicant a lot of creative freedom to show off their skills.
