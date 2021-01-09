@@ -27,3 +27,4 @@ Run the web app by simple running the following command in your shell
 ```
 $ npm start
 ```
+This should automatically launch a browser window to the locally hosted app on http://localhost:3000
