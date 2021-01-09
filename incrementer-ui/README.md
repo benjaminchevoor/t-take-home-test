@@ -2,6 +2,8 @@
 
 This is a front-end UI for the incrementing-integer-core backend service.
 
+This project is built using Node.js and React.
+
 _This is a Work In Progress and is not complete!_
 
 The current status of the project is:
